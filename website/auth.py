@@ -32,5 +32,5 @@ def sign_up():
         else:
             # add user to database
             pass
-
+#use a switch and case not for preformance
     return render_template('sign_up.html')
