@@ -10,6 +10,16 @@ class Note(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
+class Patrimonio(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    numero_patrimonio = db.Column(db.String(150), unique=True)
+    aquisicao = db.Column(db.Date())
+    tipo = db.Column(db.String(150))
+    fabricante = db.Column(db.String(10000))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    # notes = db.relationship('Note')
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)

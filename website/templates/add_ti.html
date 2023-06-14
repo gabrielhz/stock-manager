@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title %}Adicionar Patrimônios{% endblock %}
+{% block content %}
+<form method="POST">
+  <h3 align="center">Adicionar</h3>
+  <div class="form-group">
+    <label for="numeroPatrimonio">Patrimônio</label>
+    <input
+      type="text"
+      class="form-control"
+      id="numeroPatrimonio"
+      name="numeroPatrimonio"
+      placeholder="Código do patrimônio"
+    />
+  </div>
+  <div class="form-group">
+    <label for="dataPatrimonio">Data de aquisição</label>
+    <input
+      type="date"
+      class="form-control"
+      id="dataPatrimonio"
+      name="dataPatrimonio"
+      placeholder="Data de aquisição do patrimônio"
+    />
+  </div>
+  <div class="form-group">
+    <label for="tipoPatrimonio">Tipo</label>
+    <input
+      type="text"
+      class="form-control"
+      id="tipoPatrimonio"
+      name="tipoPatrimonio"
+      placeholder="Notebook, Desktop, Monitor"
+    />
+  </div>
+  <div class="form-group">
+    <label for="fabricantePatrimonio">Fabricante</label>
+    <input
+      type="text"
+      class="form-control"
+      id="fabricantePatrimonio"
+      name="fabricantePatrimonio"
+      placeholder="Dell, Itautec, AOC"
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Adicionar</button>
+</form>
+{% endblock %}

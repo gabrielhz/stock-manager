@@ -2,10 +2,11 @@
 %}
 <h1 align="center">Notes</h1>
 <ul class="list-group list-group-flush" id="notes">
-  {% for note in user.notes %}
+  {% for item in patrimonio %}
   <li class="list-group-item">
-    {{ user.first_name}} {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+    {{ item.numero_patrimonio }} {{ item.aquisicao }} {{ item.tipo }} {{
+    item.fabricante }}
+    <button type="button" class="close" onClick="deleteNote({{ item.id }})">
       <span aria-hidden="true">&times;</span>
     </button>
   </li>
