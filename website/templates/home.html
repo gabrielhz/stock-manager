@@ -1,22 +1,57 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
+<h1 align="center">Patrimonios</h1>
+
+<div class="table-responsive small">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Aquisição</th>
+        <th scope="col">Natureza</th>
+        <th scope="col">Fabricante</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in patrimonios %}
+      <tr>
+        <td>
+          <a href="{{ url_for('views.item_info', patrimonio_id=item.id) }}"
+            >{{ item.numero_patrimonio }}</a
+          >
+        </td>
+        <td>{{ item.aquisicao }}</td>
+        <td>{{ item.tipo }}</td>
+        <td>{{ item.fabricante }}</td>
+        <td>
+          <button
+            type="button"
+            class="close"
+            onClick="deletePatriomnio({{ item.id }})"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- <ul class="list-group list-group-flush" id="patrimonios">
   {% for item in patrimonio %}
   <li class="list-group-item">
     {{ item.numero_patrimonio }} {{ item.aquisicao }} {{ item.tipo }} {{
     item.fabricante }}
-    <button type="button" class="close" onClick="deleteNote({{ item.id }})">
+    <button
+      type="button"
+      class="close"
+      onClick="deletePatriomnio({{ item.id }})"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </li>
   {% endfor %}
-</ul>
-<form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
-  <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
-  </div>
-</form>
+</ul>  -->
 {% endblock %}
