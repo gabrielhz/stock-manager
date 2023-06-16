@@ -22,9 +22,9 @@ def delete_patrimonio():
     patrimonioId = patrimonio['patrimonioId']
     patrimonio = Patrimonio.query.get(patrimonioId)
     if patrimonio:
-        #if patrimonio.user_id == current_user.id:
-            db.session.delete(patrimonio)
-            db.session.commit()
+        # if patrimonio.user_id == current_user.id:
+        db.session.delete(patrimonio)
+        db.session.commit()
     return jsonify({})
 
 
@@ -50,9 +50,30 @@ def add_ti():
 
     return render_template('add_ti.html', user=current_user)
 
+
 @views.route('/item-info/<int:patrimonio_id>')
 @login_required
 def item_info(patrimonio_id):
     patrimonio = Patrimonio.query.get(patrimonio_id)
 
     return render_template("item_info.html", user=current_user, patrimonio=patrimonio)
+
+
+@views.route('/item-edit/<int:patrimonio_id>', methods=['GET', 'POST'])
+def item_edit(patrimonio_id):
+    patrimonio = Patrimonio.query.get_or_404(patrimonio_id)
+
+    if request.method == 'POST':
+        dataPatrimonio = request.form.get('dataPatrimonio')
+        tipoPatrimonio = request.form.get('tipoPatrimonio')
+        fabricantePatrimonio = request.form.get('fabricantePatrimonio')
+
+        patrimonio.aquisicao = datetime.strptime(dataPatrimonio, '%Y-%m-%d')
+        patrimonio.tipo = tipoPatrimonio
+        patrimonio.fabricante = fabricantePatrimonio
+
+        db.session.commit()
+        flash('Patrimônio editado com sucesso!', category='success')
+        return redirect(url_for('views.item_info', patrimonio_id=patrimonio.id))
+
+    return render_template('item_edit.html', user=current_user, patrimonio=patrimonio)

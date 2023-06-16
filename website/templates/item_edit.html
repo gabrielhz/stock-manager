@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %}#124123{% endblock %} {% block
+content %}
+
+<h1 align="center">Detalhes do Patrimônio</h1>
+
+<div class="col">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ patrimonio.numero_patrimonio }}</h5>
+      <p class="card-text">Adicionado em: {{ patrimonio.date }}</p>
+    </div>
+    <form method="POST">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <input
+            type="text"
+            class="form-control"
+            id="fabricantePatrimonio"
+            name="fabricantePatrimonio"
+            value="{{ patrimonio.fabricante }}"
+          />
+        </li>
+        <li class="list-group-item">
+          <input
+            type="text"
+            class="form-control"
+            id="tipoPatrimonio"
+            name="tipoPatrimonio"
+            value="{{ patrimonio.tipo }}"
+          />
+        </li>
+        <li class="list-group-item">
+          <input
+            type="date"
+            class="form-control"
+            id="dataPatrimonio"
+            name="dataPatrimonio"
+            value="{{ patrimonio.aquisicao }}"
+          />
+        </li>
+      </ul>
+      <div class="card-body">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
