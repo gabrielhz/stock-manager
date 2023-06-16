@@ -11,19 +11,19 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    patrimonio = Patrimonio.query.all()
+    patrimonios = Patrimonio.query.all()
 
-    return render_template("home.html", user=current_user, patrimonio=patrimonio)
+    return render_template("home.html", user=current_user, patrimonios=patrimonios)
 
 
-@views.route('/delete-note', methods=['POST'])
-def delete_note():
-    note = json.loads(request.data)
-    noteId = note['noteId']
-    note = Note.query.get(noteId)
-    if note:
-        if note.user_id == current_user.id:
-            db.session.delete(note)
+@views.route('/delete-patrimonio', methods=['POST'])
+def delete_patrimonio():
+    patrimonio = json.loads(request.data)
+    patrimonioId = patrimonio['patrimonioId']
+    patrimonio = Patrimonio.query.get(patrimonioId)
+    if patrimonio:
+        #if patrimonio.user_id == current_user.id:
+            db.session.delete(patrimonio)
             db.session.commit()
     return jsonify({})
 
@@ -49,3 +49,10 @@ def add_ti():
             return redirect(url_for('views.home'))
 
     return render_template('add_ti.html', user=current_user)
+
+@views.route('/item-info/<int:patrimonio_id>')
+@login_required
+def item_info(patrimonio_id):
+    patrimonio = Patrimonio.query.get(patrimonio_id)
+
+    return render_template("item_info.html", user=current_user, patrimonio=patrimonio)
