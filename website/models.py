@@ -2,22 +2,23 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-
-class Note(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.String(10000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-
 class Patrimonio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     numero_patrimonio = db.Column(db.String(150), unique=True)
     aquisicao = db.Column(db.Date())
-    tipo = db.Column(db.String(150))
-    fabricante = db.Column(db.String(10000))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    item = db.relationship('Item')
+    fabricante_id = db.Column(db.Integer, db.ForeignKey('fabricante.id'))
+    fabricante = db.relationship('Fabricante')
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    # notes = db.relationship('Note')
+
+class Fabricante(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fabricante = db.Column(db.String(10000), unique=True)
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tipo = db.Column(db.String(150), unique=True)
 
 
 class User(db.Model, UserMixin):
@@ -25,4 +26,3 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
-    notes = db.relationship('Note')

@@ -12,22 +12,31 @@ content %}
     <form method="POST">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <input
-            type="text"
-            class="form-control"
+          <select
+            class="form-select"
             id="fabricantePatrimonio"
             name="fabricantePatrimonio"
-            value="{{ patrimonio.fabricante }}"
-          />
+          >
+            <option value="{{ patrimonio.fabricante.id }}" selected>
+              {{ patrimonio.fabricante.fabricante }}
+            </option>
+            {% for fabricante in fabricantes %} {% if fabricante.id !=
+            patrimonio.fabricante.id %}
+            <option value="{{ fabricante.id }}">
+              {{ fabricante.fabricante }}
+            </option>
+            {% endif %} {% endfor %}
+          </select>
         </li>
         <li class="list-group-item">
-          <input
-            type="text"
-            class="form-control"
-            id="tipoPatrimonio"
-            name="tipoPatrimonio"
-            value="{{ patrimonio.tipo }}"
-          />
+          <select class="form-select" id="tipoPatrimonio" name="tipoPatrimonio">
+            <option value="{{ patrimonio.item.id }}" selected>
+              {{ patrimonio.item.tipo }}
+            </option>
+            {% for item in items %} {% if item.id != patrimonio.item.id %}
+            <option value="{{ item.id }}">{{ item.tipo }}</option>
+            {% endif %} {% endfor %}
+          </select>
         </li>
         <li class="list-group-item">
           <input

@@ -24,23 +24,23 @@
   </div>
   <div class="form-group">
     <label for="tipoPatrimonio">Tipo</label>
-    <input
-      type="text"
-      class="form-control"
-      id="tipoPatrimonio"
-      name="tipoPatrimonio"
-      placeholder="Notebook, Desktop, Monitor"
-    />
+    <select class="form-select" id="tipoPatrimonio" name="tipoPatrimonio">
+      {% for item in items %}
+      <option value="{{ item.id }}">{{ item.tipo }}</option>
+      {% endfor %}
+    </select>
   </div>
   <div class="form-group">
     <label for="fabricantePatrimonio">Fabricante</label>
-    <input
-      type="text"
-      class="form-control"
+    <select
+      class="form-select"
       id="fabricantePatrimonio"
       name="fabricantePatrimonio"
-      placeholder="Dell, Itautec, AOC"
-    />
+    >
+      {% for fabricante in fabricantes %}
+      <option value="{{ fabricante.id }}">{{ fabricante.fabricante }}</option>
+      {% endfor %}
+    </select>
   </div>
   <br />
   <button type="submit" class="btn btn-primary">Adicionar</button>
