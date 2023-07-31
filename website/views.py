@@ -13,11 +13,11 @@ views = Blueprint('views', __name__)
 def home():
     patrimonios = Patrimonio.query.all()
 
-    return render_template("home.html", user=current_user, patrimonios=patrimonios)
+    return render_template("Patrimonio/home.html", user=current_user, patrimonios=patrimonios)
 
 
-@views.route('/delete-patrimonio', methods=['POST'])
-def delete_patrimonio():
+@views.route('/patrimonio-delete', methods=['POST'])
+def patrimonio_delete():
     patrimonio = json.loads(request.data)
     patrimonioId = patrimonio['patrimonioId']
     patrimonio = Patrimonio.query.get(patrimonioId)
@@ -28,14 +28,14 @@ def delete_patrimonio():
     return jsonify({})
 
 
-@views.route('/add')
-def add():
+@views.route('/menu-add')
+def menu_add():
 
-    return render_template('add.html', user=current_user)
+    return render_template('Adicionar/menu.html', user=current_user)
 
 
-@views.route('/add-ti', methods=['GET', 'POST'])
-def add_ti():
+@views.route('/patrimonio-add', methods=['GET', 'POST'])
+def patrimonio_add():
     items = Item.query.all()
     fabricantes = Fabricante.query.all()
 
@@ -57,11 +57,11 @@ def add_ti():
             flash('Patrimonio Adicionado!', category='sucess')
             return redirect(url_for('views.home'))
 
-    return render_template('add_ti.html', user=current_user, items=items, fabricantes=fabricantes)
+    return render_template('Adicionar/patrimonio.html', user=current_user, items=items, fabricantes=fabricantes)
 
 
-@views.route('/add-item', methods=['GET', 'POST'])
-def add_item():
+@views.route('/item-add', methods=['GET', 'POST'])
+def item_add():
     if request.method == 'POST':
         tipoItem = request.form.get('tipoItem')
 
@@ -76,11 +76,11 @@ def add_item():
             flash('Item Adicionado!', category='sucess')
             return redirect(url_for('views.home'))
 
-    return render_template('add_item.html', user=current_user)
+    return render_template('Adicionar/item.html', user=current_user)
 
 
-@views.route('/add-fabricante', methods=['GET', 'POST'])
-def add_fabricante():
+@views.route('/fabricante_add', methods=['GET', 'POST'])
+def fabricante_add():
     if request.method == 'POST':
         nomeFabricante = request.form.get('nomeFabricante')
 
@@ -95,19 +95,19 @@ def add_fabricante():
             flash('Item Adicionado!', category='sucess')
             return redirect(url_for('views.home'))
 
-    return render_template('add_fabricante.html', user=current_user)
+    return render_template('Adicionar/fabricante.html', user=current_user)
 
 
-@views.route('/item-info/<int:patrimonio_id>')
+@views.route('/patrimonio-info/<int:patrimonio_id>')
 @login_required
-def item_info(patrimonio_id):
+def patrimonio_info(patrimonio_id):
     patrimonio = Patrimonio.query.get(patrimonio_id)
 
-    return render_template("item_info.html", user=current_user, patrimonio=patrimonio)
+    return render_template("Patrimonio/info.html", user=current_user, patrimonio=patrimonio)
 
 
-@views.route('/item-edit/<int:patrimonio_id>', methods=['GET', 'POST'])
-def item_edit(patrimonio_id):
+@views.route('/patrimonio-edit/<int:patrimonio_id>', methods=['GET', 'POST'])
+def patrimonio_edit(patrimonio_id):
     items = Item.query.all()
     fabricantes = Fabricante.query.all()
     patrimonio = Patrimonio.query.get_or_404(patrimonio_id)
@@ -125,4 +125,4 @@ def item_edit(patrimonio_id):
         flash('Patrimônio editado com sucesso!', category='success')
         return redirect(url_for('views.item_info', patrimonio_id=patrimonio.id))
 
-    return render_template('item_edit.html', user=current_user, patrimonio=patrimonio, items=items, fabricantes=fabricantes)
+    return render_template('Patrimonio/edit.html', user=current_user, patrimonio=patrimonio, items=items, fabricantes=fabricantes)

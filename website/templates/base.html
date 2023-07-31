@@ -39,7 +39,7 @@
           {% if user.is_authenticated %}
           <a class="nav-item nav-link" id="login" href="/">Home</a>
           <a class="nav-item nav-link" id="login" href="/logout">Logout</a>
-          <a class="nav-item nav-link" id="login" href="/add">Adicionar</a>
+          <a class="nav-item nav-link" id="login" href="/menu-add">Adicionar</a>
           {% else %}
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           <a class="nav-item nav-link" id="login" href="/sign-up">Sign Up</a>
@@ -142,7 +142,7 @@
         $("#confirmDeleteModal").modal("show");
 
         $("#confirmDeleteButton").click(() => {
-          fetch("/delete-patrimonio", {
+          fetch("/patrimonio-delete", {
             method: "POST",
             body: JSON.stringify({ patrimonioId: patrimonioId }),
           }).then((_res) => {

@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Patrimonios</h1>
+<h1 align="center">Patrimônios</h1>
 <br />
 <br />
 <div class="table-responsive small">
@@ -18,7 +18,8 @@
       {% for item in patrimonios %}
       <tr>
         <td>
-          <a href="{{ url_for('views.item_info', patrimonio_id=item.id) }}"
+          <a
+            href="{{ url_for('views.patrimonio_info', patrimonio_id=item.id) }}"
             >{{ item.numero_patrimonio }}</a
           >
         </td>
