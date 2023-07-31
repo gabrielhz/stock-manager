@@ -28,6 +28,12 @@ def delete_patrimonio():
     return jsonify({})
 
 
+@views.route('/add')
+def add():
+
+    return render_template('add.html', user=current_user)
+
+
 @views.route('/add-ti', methods=['GET', 'POST'])
 def add_ti():
     items = Item.query.all()
@@ -38,8 +44,6 @@ def add_ti():
         dataPatrimonio = request.form.get('dataPatrimonio')
         tipoPatrimonio = request.form.get('tipoPatrimonio')
         fabricantePatrimonio = request.form.get('fabricantePatrimonio')
-
-
 
         patrimonio = Patrimonio.query.filter_by(
             numero_patrimonio=numeroPatrimonio).first()
@@ -54,6 +58,44 @@ def add_ti():
             return redirect(url_for('views.home'))
 
     return render_template('add_ti.html', user=current_user, items=items, fabricantes=fabricantes)
+
+
+@views.route('/add-item', methods=['GET', 'POST'])
+def add_item():
+    if request.method == 'POST':
+        tipoItem = request.form.get('tipoItem')
+
+        item = Item.query.filter_by(
+            tipo=tipoItem).first()
+        if item:
+            flash('Item já registrado!', category='error')
+        else:
+            new_item = Item(tipo=tipoItem)
+            db.session.add(new_item)
+            db.session.commit()
+            flash('Item Adicionado!', category='sucess')
+            return redirect(url_for('views.home'))
+
+    return render_template('add_item.html', user=current_user)
+
+
+@views.route('/add-fabricante', methods=['GET', 'POST'])
+def add_fabricante():
+    if request.method == 'POST':
+        nomeFabricante = request.form.get('nomeFabricante')
+
+        fabricante = Fabricante.query.filter_by(
+            nome=nomeFabricante).first()
+        if fabricante:
+            flash('Fabricante já registrado!', category='error')
+        else:
+            new_fabricante = Fabricante(nome=nomeFabricante)
+            db.session.add(new_fabricante)
+            db.session.commit()
+            flash('Item Adicionado!', category='sucess')
+            return redirect(url_for('views.home'))
+
+    return render_template('add_fabricante.html', user=current_user)
 
 
 @views.route('/item-info/<int:patrimonio_id>')

@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block title %}#124123{% endblock %} {% block
+content %}
+
+<div class="container my-5">
+  <div class="p-5 text-center bg-body-tertiary rounded-3">
+    <h1 class="text-body-emphasis">Menu Adicionar</h1>
+    <br />
+    <div class="d-inline-flex gap-2 mb-5">
+      <button
+        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
+        type="button"
+        onClick="window.location.href='add-ti'"
+      >
+        Patrimônio
+      </button>
+      <button
+        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
+        type="button"
+        onClick="window.location.href='add-item'"
+      >
+        Item
+      </button>
+      <button
+        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
+        type="button"
+        onClick="window.location.href='add-fabricante'"
+      >
+        Fabricante
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
