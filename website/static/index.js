@@ -1,7 +1,7 @@
 function deletePatrimonio(patrimonioId) {
-  $('#confirmDeleteModal').modal('show');
+  $("#confirmDeleteModal").modal("show");
 
-  $('#confirmDeleteButton').click(() => {
+  $("#confirmDeleteButton").click(() => {
     fetch("/patrimonio-delete", {
       method: "POST",
       body: JSON.stringify({ patrimonioId: patrimonioId }),
@@ -10,3 +10,4 @@ function deletePatrimonio(patrimonioId) {
     });
   });
 }
+

@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}Adicionar Patrimônios{% endblock %}
 {% block content %}
+
 <form method="POST">
   <h3 align="center">Adicionar</h3>
   <div class="form-group">
@@ -10,6 +11,7 @@
       id="numeroPatrimonio"
       name="numeroPatrimonio"
       placeholder="Código do patrimônio"
+      required
     />
   </div>
   <div class="form-group">
@@ -20,11 +22,19 @@
       id="dataPatrimonio"
       name="dataPatrimonio"
       placeholder="Data de aquisição do patrimônio"
+      max="{{ current_date }}"
+      onchange="consultarStatus()"
+      required
     />
   </div>
   <div class="form-group">
     <label for="tipoPatrimonio">Tipo</label>
-    <select class="form-select" id="tipoPatrimonio" name="tipoPatrimonio">
+    <select
+      class="form-select"
+      id="tipoPatrimonio"
+      name="tipoPatrimonio"
+      onchange="consultarStatus()"
+    >
       {% for item in items %}
       <option value="{{ item.id }}">{{ item.tipo }}</option>
       {% endfor %}
@@ -42,7 +52,54 @@
       {% endfor %}
     </select>
   </div>
+  <div class="form-group">
+    <label for="statusPatrimonio">Status</label>
+    <select class="form-select" id="statusPatrimonio" name="statusPatrimonio">
+      {% for item in status %}
+      <option value="{{ item.id }}">{{ item.nome }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
   <br />
   <button type="submit" class="btn btn-primary">Adicionar</button>
 </form>
+{% endblock %} {% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  function consultarStatus() {
+    const data_objeto = document.getElementById("dataPatrimonio");
+    const data = new Date(data_objeto.value);
+    const ano = data.getFullYear();
+
+    const tipo_id = document.getElementById("tipoPatrimonio").value;
+    const statusSelect = document.getElementById("statusPatrimonio");
+
+    if (ano >= 1900) {
+      axios
+        .post(`/api_servico/${tipo_id}`)
+        .then(function (response) {
+          const api = response.data;
+
+          const diferenca = api.ano_atual - ano;
+
+          console.log("Tempo de serviço:", api.tempo_servico);
+          console.log("Ano atual:", api.ano_atual);
+          console.log("Ano aquisicao:", ano);
+          console.log("Diferença:", diferenca);
+
+          if (diferenca > api.tempo_servico) {
+            statusSelect.value = "99";
+            statusSelect.setAttribute("disabled", "disabled");
+          } else {
+            statusSelect.value = "1";
+            statusSelect.removeAttribute("disabled");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
+</script>
 {% endblock %}

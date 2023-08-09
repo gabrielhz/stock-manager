@@ -1,0 +1,101 @@
+{% extends "base.html" %} {% block title %}Adicionar Local{% endblock %} {%
+block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  function consultarCEP() {
+    var cep = document.getElementById("cepLocal").value;
+
+    axios
+      .post("/consulta_cep", { cep: cep })
+      .then(function (response) {
+        var endereco = response.data;
+
+        // Preencha os campos do formulário com os dados do endereço
+        document.getElementById("logradouroLocal").value = endereco.logradouro;
+        document.getElementById("bairroLocal").value = endereco.bairro;
+        document.getElementById("cidadeLocal").value = endereco.localidade;
+        document.getElementById("ufLocal").value = endereco.uf;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+</script>
+
+<form method="POST">
+  <h3 align="center">Adicionar</h3>
+  <div class="form-group">
+    <label for="nomeLocal">Nome</label>
+    <input
+      type="text"
+      class="form-control"
+      id="nomeLocal"
+      name="nomeLocal"
+      placeholder="Nome social"
+    />
+  </div>
+  <div class="form-group">
+    <label for="cepLocal">CEP:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="cepLocal"
+      name="cepLocal"
+      onchange="consultarCEP()"
+    />
+  </div>
+  <div class="form-group">
+    <label for="logradouroLocal">Logradouro:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="logradouroLocal"
+      name="logradouroLocal"
+      readonly
+    />
+  </div>
+  <div class="form-group">
+    <label for="bairroLocal">Bairro:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="bairroLocal"
+      name="bairroLocal"
+      readonly
+    />
+  </div>
+  <div class="form-group">
+    <label for="cidadeLocal">Cidade:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="cidadeLocal"
+      name="cidadeLocal"
+      readonly
+    />
+  </div>
+  <div class="form-group">
+    <label for="ufLocal">Estado:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="ufLocal"
+      name="ufLocal"
+      readonly
+    />
+  </div>
+  <div class="form-group">
+    <label for="numeroLocal">Número:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="numeroLocal"
+      name="numeroLocal"
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Adicionar</button>
+</form>
+
+{% endblock %}

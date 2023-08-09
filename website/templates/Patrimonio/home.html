@@ -11,6 +11,7 @@
         <th scope="col">Aquisição</th>
         <th scope="col">Natureza</th>
         <th scope="col">Fabricante</th>
+        <th scope="col">Serviço</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -26,6 +27,7 @@
         <td>{{ item.aquisicao }}</td>
         <td>{{ item.item.tipo }}</td>
         <td>{{ item.fabricante.nome }}</td>
+        <td>{{ item.status.nome }}</td>
         <td>
           <button
             type="button"
